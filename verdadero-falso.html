@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verdadero o Falso - Cultura General</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="verdadero-falso.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <a href="index.html" style="color: white; text-decoration: none;">
+                    <i class="fas fa-graduation-cap"></i>
+                    Cultura General
+                </a>
+            </h1>
+            <nav class="nav">
+                <a href="index.html#aprender" class="nav-link">Aprender</a>
+                <a href="index.html#practicar" class="nav-link">Practicar</a>
+                <a href="index.html#contacto" class="nav-link">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Juego Verdadero o Falso -->
+    <section class="vf-section">
+        <div class="container">
+            <!-- Título del juego -->
+            <div class="game-header">
+                <h2 class="game-title">
+                    <i class="fas fa-check-circle"></i>
+                    Verdadero o Falso
+                </h2>
+                <p class="game-subtitle">
+                    Lee cada afirmación y decide si es verdadera o falsa. 
+                    ¡Pon a prueba tus conocimientos de cultura general!
+                </p>
+            </div>
+
+            <!-- Panel de estadísticas -->
+            <div class="stats-panel">
+                <div class="stat-item">
+                    <span class="stat-label">Pregunta</span>
+                    <span class="stat-value" id="current-question">1</span>
+                    <span class="stat-total">/ 50</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Aciertos</span>
+                    <span class="stat-value" id="correct-answers">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Fallos</span>
+                    <span class="stat-value" id="incorrect-answers">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Puntuación</span>
+                    <span class="stat-value" id="score">0</span>
+                </div>
+            </div>
+
+            <!-- Barra de progreso -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span class="progress-text" id="progress-text">0%</span>
+            </div>
+
+            <!-- Área principal del juego -->
+            <div class="game-area">
+                <!-- Panel de afirmación -->
+                <div class="statement-panel">
+                    <div class="question-number">
+                        <span id="question-number-display">Afirmación 1</span>
+                    </div>
+                    
+                    <div class="statement-container">
+                        <p class="statement-text" id="statement-text">
+                            Cargando afirmación...
+                        </p>
+                    </div>
+
+                    <!-- Botones Verdadero/Falso -->
+                    <div class="vf-buttons-container">
+                        <button class="vf-button true-button" id="true-button">
+                            <i class="fas fa-check"></i>
+                            <span>Verdadero</span>
+                        </button>
+                        <button class="vf-button false-button" id="false-button">
+                            <i class="fas fa-times"></i>
+                            <span>Falso</span>
+                        </button>
+                    </div>
+
+                    <!-- Feedback de respuesta -->
+                    <div class="feedback-container" id="feedback-container" style="display: none;">
+                        <div class="feedback-content">
+                            <div class="feedback-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feedback-text">
+                                <p class="feedback-result">¡Correcto!</p>
+                                <p class="feedback-explanation">Has seleccionado la respuesta correcta.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contador automático -->
+                    <div class="auto-advance-container" id="auto-advance-container" style="display: none;">
+                        <div class="auto-advance-text">
+                            <i class="fas fa-clock"></i>
+                            Siguiente afirmación en <span id="countdown">2</span> segundos...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles del juego -->
+            <div class="game-controls">
+                <button id="restart-btn" class="btn btn-warning">
+                    <i class="fas fa-redo"></i>
+                    Reiniciar Juego
+                </button>
+                <button id="help-btn" class="btn btn-info">
+                    <i class="fas fa-question-circle"></i>
+                    Ayuda
+                </button>
+                <a href="index.html#practicar" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver a Juegos
+                </a>
+            </div>
+
+            <!-- Modal de resultados finales -->
+            <div class="modal" id="results-modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>¡Juego Completado!</h3>
+                        <button class="modal-close" id="modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="final-score">
+                            <div class="score-circle">
+                                <span class="score-number" id="final-score">0</span>
+                                <span class="score-label">puntos</span>
+                            </div>
+                        </div>
+                        
+                        <div class="results-summary">
+                            <div class="result-item correct">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Respuestas correctas: <strong id="final-correct">0</strong></span>
+                            </div>
+                            <div class="result-item incorrect">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Respuestas incorrectas: <strong id="final-incorrect">0</strong></span>
+                            </div>
+                            <div class="result-item percentage">
+                                <i class="fas fa-percentage"></i>
+                                <span>Porcentaje de acierto: <strong id="final-percentage">0%</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div class="performance-message" id="performance-message">
+                            <!-- Mensaje motivador basado en el rendimiento -->
+                        </div>
+
+                        <div class="modal-actions">
+                            <button id="play-again-btn" class="btn btn-primary">
+                                <i class="fas fa-redo"></i>
+                                Jugar de Nuevo
+                            </button>
+                            <a href="index.html#aprender" class="btn btn-secondary">
+                                <i class="fas fa-book-open"></i>
+                                Repasar Teoría
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de ayuda -->
+            <div class="modal" id="help-modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>¿Cómo jugar Verdadero o Falso?</h3>
+                        <button class="modal-close" id="help-modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="help-content">
+                            <div class="help-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>50 Afirmaciones</h4>
+                                    <p>Responde 50 afirmaciones de cultura general decidiendo si son verdaderas o falsas.</p>
+                                </div>
+                            </div>
+                            <div class="help-item">
+                                <i class="fas fa-mouse-pointer"></i>
+                                <div>
+                                    <h4>Dos opciones</h4>
+                                    <p>Solo tienes que elegir entre "Verdadero" o "Falso" para cada afirmación.</p>
+                                </div>
+                            </div>
+                            <div class="help-item">
+                                <i class="fas fa-star"></i>
+                                <div>
+                                    <h4>Puntuación</h4>
+                                    <p>Cada respuesta correcta suma 10 puntos. La puntuación máxima es 500 puntos.</p>
+                                </div>
+                            </div>
+                            <div class="help-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <div>
+                                    <h4>Consejos</h4>
+                                    <p>Lee bien cada afirmación antes de responder. ¡Algunas pueden ser engañosas!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="verdadero-falso.js"></script>
+</body>
+</html>
