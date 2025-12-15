@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasapalabra - Cultura General</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pasapalabra.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <a href="index.html" style="color: white; text-decoration: none;">
+                    <i class="fas fa-graduation-cap"></i>
+                    Cultura General
+                </a>
+            </h1>
+            <nav class="nav">
+                <a href="index.html#aprender" class="nav-link">Aprender</a>
+                <a href="index.html#practicar" class="nav-link">Practicar</a>
+                <a href="index.html#contacto" class="nav-link">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Juego Pasapalabra -->
+    <section class="pasapalabra-section">
+        <div class="container">
+            <!-- Título del juego -->
+            <div class="game-header">
+                <h2 class="game-title">
+                    <i class="fas fa-circle-notch"></i>
+                    Pasapalabra
+                </h2>
+                <p class="game-subtitle">
+                    Completa el rosco de la A a la Z. ¡Demuestra tus conocimientos de cultura general!
+                </p>
+            </div>
+
+            <!-- Panel de estadísticas -->
+            <div class="stats-panel">
+                <div class="stat-item">
+                    <span class="stat-label">Aciertos</span>
+                    <span class="stat-value" id="aciertos">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Fallos</span>
+                    <span class="stat-value" id="fallos">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Pendientes</span>
+                    <span class="stat-value" id="pendientes">26</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Tiempo</span>
+                    <span class="stat-value" id="tiempo">00:00</span>
+                </div>
+            </div>
+
+            <!-- Área principal del juego -->
+            <div class="game-area">
+                <!-- Rosco de letras -->
+                <div class="rosco-container">
+                    <div class="rosco" id="rosco">
+                        <!-- Las letras se generarán dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Panel de pregunta y respuesta -->
+                <div class="question-panel">
+                    <div class="current-letter">
+                        <span id="current-letter-display">A</span>
+                    </div>
+                    
+                    <div class="question-container">
+                        <p class="question-text" id="question-text">
+                            Cargando pregunta...
+                        </p>
+                    </div>
+
+                    <div class="answer-container">
+                        <input 
+                            type="text" 
+                            id="answer-input" 
+                            class="answer-input" 
+                            placeholder="Escribe tu respuesta aquí..."
+                            autocomplete="off"
+                            spellcheck="false"
+                        >
+                        
+                        <div class="game-buttons">
+                            <button id="confirm-btn" class="btn btn-primary">
+                                <i class="fas fa-check"></i>
+                                Confirmar
+                            </button>
+                            <button id="pass-btn" class="btn btn-secondary">
+                                <i class="fas fa-arrow-right"></i>
+                                Pasapalabra
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Feedback de respuesta -->
+                    <div class="feedback-container" id="feedback-container" style="display: none;">
+                        <div class="feedback-content">
+                            <div class="feedback-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feedback-text">
+                                <p class="feedback-result">¡Correcto!</p>
+                                <p class="feedback-explanation">Explicación de la respuesta...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles del juego -->
+            <div class="game-controls">
+                <button id="restart-btn" class="btn btn-warning">
+                    <i class="fas fa-redo"></i>
+                    Reiniciar Juego
+                </button>
+                <button id="help-btn" class="btn btn-info">
+                    <i class="fas fa-question-circle"></i>
+                    Ayuda
+                </button>
+                <a href="index.html#practicar" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver a Juegos
+                </a>
+            </div>
+
+            <!-- Modal de resultados -->
+            <div class="modal" id="results-modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>¡Juego Completado!</h3>
+                        <button class="modal-close" id="modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="results-summary">
+                            <div class="result-item correct">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Aciertos: <strong id="final-aciertos">0</strong></span>
+                            </div>
+                            <div class="result-item incorrect">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Fallos: <strong id="final-fallos">0</strong></span>
+                            </div>
+                            <div class="result-item pending">
+                                <i class="fas fa-clock"></i>
+                                <span>Sin responder: <strong id="final-pendientes">0</strong></span>
+                            </div>
+                            <div class="result-item time">
+                                <i class="fas fa-stopwatch"></i>
+                                <span>Tiempo total: <strong id="final-tiempo">00:00</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div class="performance-message" id="performance-message">
+                            <!-- Mensaje motivador basado en el rendimiento -->
+                        </div>
+
+                        <div class="modal-actions">
+                            <button id="play-again-btn" class="btn btn-primary">
+                                <i class="fas fa-redo"></i>
+                                Jugar de Nuevo
+                            </button>
+                            <a href="index.html#aprender" class="btn btn-secondary">
+                                <i class="fas fa-book-open"></i>
+                                Repasar Teoría
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de ayuda -->
+            <div class="modal" id="help-modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>¿Cómo jugar al Pasapalabra?</h3>
+                        <button class="modal-close" id="help-modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="help-content">
+                            <div class="help-item">
+                                <i class="fas fa-circle-notch"></i>
+                                <div>
+                                    <h4>El Rosco</h4>
+                                    <p>Completa las 26 letras del abecedario respondiendo preguntas de cultura general.</p>
+                                </div>
+                            </div>
+                            <div class="help-item">
+                                <i class="fas fa-check"></i>
+                                <div>
+                                    <h4>Confirmar</h4>
+                                    <p>Escribe tu respuesta y pulsa "Confirmar" o presiona Enter.</p>
+                                </div>
+                            </div>
+                            <div class="help-item">
+                                <i class="fas fa-arrow-right"></i>
+                                <div>
+                                    <h4>Pasar</h4>
+                                    <p>Si no sabes la respuesta, pulsa "Pasar" para continuar. Podrás volver más tarde.</p>
+                                </div>
+                            </div>
+                            <div class="help-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <div>
+                                    <h4>Consejos</h4>
+                                    <p>Lee bien las preguntas. Pueden empezar por la letra o contenerla. ¡No te rindas!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="pasapalabra.js"></script>
+</body>
+</html>
